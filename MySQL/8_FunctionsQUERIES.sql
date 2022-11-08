@@ -1,6 +1,6 @@
-18/10/22
+-- 18/10/22
 
-QUERIES:-
+-- QUERIES:-
 
 -- [a] List the name of all client having 'a' as the second letter in their names.
     select * from client_master where name like '_a%';
