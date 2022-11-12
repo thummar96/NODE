@@ -5,120 +5,89 @@
 
 A.Print the description and total qty sold for each product.
 
-        select p.productno , p.description ,sum(s.qtydisp)
-             from SALES_ORDER_DETAILS s,product_master p
-                where s.productno=p.productno
-                    group by p.productno;
+                select p.productno,p.Description, sum(sod.QTYOREDERD) 
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                 where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        group by p.productno;
 
-                +-----------+--------------+----------------+
-                | productno | description  | sum(s.qtydisp) |
-                +-----------+--------------+----------------+
-                | p00001    | 1.44floppies |             19 |
-                | p07965    | 540 HDD      |              1 |
-                | p07885    | CD Drive     |              2 |
-                | p07868    | keyboards    |              3 |
-                | p03453    | monitors     |              2 |
-                | p06734    | mouse        |              1 |
-                | p07975    | 1.44 Drive   |              3 |
-                +-----------+--------------+----------------+
+                                +-----------+--------------+---------------------+
+                                | productno | Description  | sum(sod.QTYOREDERD) |
+                                +-----------+--------------+---------------------+
+                                | p06734    | mouse        |                   1 |
+                                | p03453    | monitors     |                   2 |
+                                | p07885    | CD Drive     |                   5 |
+                                | p07965    | 540 HDD      |                   3 |
+                                | p00001    | 1.44floppies |                  34 |
+                                | p07868    | keyboards    |                   3 |
+                                | p07975    | 1.44 Drive   |                   6 |
+                                +-----------+--------------+---------------------+
+
+
 
 B.Find the value of each product sold.
 
-            select  p.productno,p.description,sum(s.qtydisp)
-                from sales_order_details s,product_master p
-                      where s.productno=p.productno
-                             group by p.productno;
+                select p.productno,p.Description, sum(SOD.QTYDISP) 
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                 where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        group by p.productno;
 
-                +-----------+--------------+----------------+
-                | productno | description  | sum(s.qtydisp) |
-                +-----------+--------------+----------------+
-                | p00001    | 1.44floppies |             19 |
-                | p07965    | 540 HDD      |              1 |
-                | p07885    | CD Drive     |              2 |
-                | p07868    | keyboards    |              3 |
-                | p03453    | monitors     |              2 |
-                | p06734    | mouse        |              1 |
-                | p07975    | 1.44 Drive   |              3 |
-                +-----------+--------------+----------------+
+
+                                +-----------+--------------+------------------+
+                                | productno | Description  | sum(SOD.QTYDISP) |
+                                +-----------+--------------+------------------+
+                                | p00001    | 1.44floppies |               19 |
+                                | p07965    | 540 HDD      |                1 |
+                                | p07885    | CD Drive     |                2 |
+                                | p03453    | monitors     |                2 |
+                                | p06734    | mouse        |                1 |
+                                | p07868    | keyboards    |                3 |
+                                | p07975    | 1.44 Drive   |                3 |
+                                +-----------+--------------+------------------+
+
 
 C.Calculate the average qty sold for each client that has a maximum order value of 15000.00.
 
--- select a.clientno,avg(b.qtydisp)
---     ->  from SALES_ORDER_DETAILS  b,CLIENT_MASTER  a,SALES_ORDER c
---     -> where a.clientno=c.clientno and c.orderno=b.orderno
---     -> group by a.clientno
---     -> having max(b.QTYOREDERD * b.productrate)>15000;
-
-        select c.Clientno,c.Name,avg(sod.QTYDISP) as "Avg. sales on SALES_ORDER_DETAILS"
-            from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod
-                where c.Clientno=so.Clientno and so.ORDERNO = sod.ORDERNO
-                    group by c.Clientno
-                        having max(sod.QTYOREDERD*sod.PRODUCTRATE)>15000;
-
-        +----------+---------+-----------------------------------+
-        | Clientno | Name    | Avg. sales on SALES_ORDER_DETAILS |
-        +----------+---------+-----------------------------------+
-        | C00001   | Ivan    |                            1.8000 |
-        | C00003   | Pramada |                            4.6667 |
-        +----------+---------+-----------------------------------+
 
 
-        select c.Clientno,c.Name,avg(sod.QTYDISP) as "Avg. sales on SALES_ORDER_DETAILS",max(sod.QTYOREDERD*sod.PRODUCTRATE)
-                from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod
-                        where c.Clientno=so.Clientno and so.ORDERNO = sod.ORDERNO
-                                group by c.Clientno
-                                    having max(sod.QTYOREDERD*sod.PRODUCTRATE)>15000;
+                select c.Clientno,c.Name,avg(sod.QTYDISP) as "Avg. sales on SALES_ORDER_DETAILS",max(sod.QTYOREDERD*sod.PRODUCTRATE)
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod
+                                where c.Clientno=so.Clientno and so.ORDERNO = sod.ORDERNO
+                                        group by c.Clientno
+                                                having max(sod.QTYOREDERD*sod.PRODUCTRATE)>15000;
 
-            +----------+---------+-----------------------------------+-------------------------------------+
-            | Clientno | Name    | Avg. sales on SALES_ORDER_DETAILS | max(sod.QTYOREDERD*sod.PRODUCTRATE) |
-            +----------+---------+-----------------------------------+-------------------------------------+
-            | C00001   | Ivan    |                            1.8000 |                            16800.00 |
-            | C00003   | Pramada |                            4.6667 |                            15750.00 |
-            +----------+---------+-----------------------------------+-------------------------------------+
+                +----------+---------+-----------------------------------+-------------------------------------+
+                | Clientno | Name    | Avg. sales on SALES_ORDER_DETAILS | max(sod.QTYOREDERD*sod.PRODUCTRATE) |
+                +----------+---------+-----------------------------------+-------------------------------------+
+                | C00001   | Ivan    |                            1.8000 |                            16800.00 |
+                | C00003   | Pramada |                            4.6667 |                            15750.00 |
+                +----------+---------+-----------------------------------+-------------------------------------+
 
 D.Find out the total of all the billed orders for month of 10.
 
-            select CLIENTNO,SALESMANNO,BILLYN,DELYDATE,ORDERSTATUS
-                    from SALES_ORDER
-                             where BILLYN="Y" and MONTH(ORDERDATE)=10;
+                select CLIENTNO,SALESMANNO,BILLYN,DELYDATE,ORDERSTATUS
+                        from SALES_ORDER
+                                where BILLYN="Y" and MONTH(ORDERDATE)=10;
 
-            +----------+------------+--------+------------+-------------+
-            | CLIENTNO | SALESMANNO | BILLYN | DELYDATE   | ORDERSTATUS |
-            +----------+------------+--------+------------+-------------+
-            | C00001   | S00001     | Y      | 2007-12-02 | Fulfilled   |
-            | C00003   | S00003     | Y      | 2020-09-02 | Fulfilled   |
-            +----------+------------+--------+------------+-------------+
+                        +----------+------------+--------+------------+-------------+
+                        | CLIENTNO | SALESMANNO | BILLYN | DELYDATE   | ORDERSTATUS |
+                        +----------+------------+--------+------------+-------------+
+                        | C00001   | S00001     | Y      | 2007-12-02 | Fulfilled   |
+                        | C00003   | S00003     | Y      | 2020-09-02 | Fulfilled   |
+                        +----------+------------+--------+------------+-------------+
 
-            select so.ORDERDATE,sum(sod.QTYOREDERD) as "Total"
-                    from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
-                            where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
-                                    and 10=(MONTH(so.ORDERDATE))
-                                            group by so.ORDERDATE;
+                select MONTH(so.ORDERDATE) as "Octomber",sum(sod.QTYOREDERD) as "Total"
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                         group by so.ORDERDATE
+                                                having  10=(MONTH(so.ORDERDATE));
 
-                            +------------+-------+
-                            | ORDERDATE  | Total |
-                            +------------+-------+
-                            | 2022-10-12 |    54 |
-                            +------------+-------+
+                                                +----------+-------+
+                                                | Octomber | Total |
+                                                +----------+-------+
+                                                |       10 |    54 |
+                                                +----------+-------+
 
-
-    -- select SALES_ORDER.ORDERDATE,sum(SALES_ORDER_DETAILS.QTYOREDERD)
-    -- from (((product_master
-    -- inner join  SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno)
-    -- inner join sales_order on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-    -- inner join client_master on  sales_order.Clientno = client_master.Clientno )
-    -- where  sales_order.BILLYN="Y"
-    -- group by SALES_ORDER.ORDERDATE
-    -- having 10=(MONTH(sales_order.DELYDATE));
-
-
-    -- select ORDERNO,CLIENTNO,SALESMANNO,BILLYN,DELYDATE,ORDERSTATUS
-    -- from SALES_ORDER
-    -- where  BILLYN="Y"
-    -- group by CLIENTNO
-    -- having 10=(MONTH(DELYDATE));
-
-
+   
 
 
 
@@ -128,181 +97,160 @@ D.Find out the total of all the billed orders for month of 10.
 
 A. Find out the Product, which have been sold to "Ivan Bayross".
 
-        select a.PRODUCTNO,b.description
-                from SALES_ORDER_DETAILS a,product_master b, SALES_ORDER c,CLIENT_MASTER d
-                    where b.productno=a.productno
-                        and c.ORDERNO=a.ORDERNO
-                            and c.CLIENTNO=c.CLIENTNO
-                                 and d.name="Ivan";
+                select C.Clientno,C.Name,SOD.orderno,SOD.PRODUCTNO
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and C.name =  "Ivan"  ; 
 
-        select c.Clientno,c.Name,sod.orderno,sod.PRODUCTNO,p.Description
-             from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
-                     where c.Clientno=so.Clientno and so.ORDERNO = sod.ORDERNO
-                            and c.name =  "Ivan"; 
-
-         select client_master.Clientno,client_master.Name,SALES_ORDER_DETAILS.orderno,SALES_ORDER_DETAILS.PRODUCTNO
-             from  ((client_master 
-                    inner join SALES_ORDER on  client_master.Clientno= SALES_ORDER.Clientno)
-                        inner join SALES_ORDER_DETAILS on SALES_ORDER.ORDERNO = SALES_ORDER_DETAILS.ORDERNO)
-                            where client_master.name =  "Ivan"  ; 
-
-                    +----------+------+---------+-----------+
-                    | Clientno | Name | orderno | PRODUCTNO |
-                    +----------+------+---------+-----------+
-                    | C00001   | Ivan | 019001  | P00001    |
-                    | C00001   | Ivan | 019001  | P07965    |
-                    | C00001   | Ivan | 019001  | P07885    |
-                    | C00001   | Ivan | 019003  | p03453    |
-                    | C00001   | Ivan | 019003  | p06734    |
-                    +----------+------+---------+-----------+
+                                        +----------+------+---------+-----------+
+                                        | Clientno | Name | orderno | PRODUCTNO |
+                                        +----------+------+---------+-----------+
+                                        | C00001   | Ivan | 019001  | P00001    |
+                                        | C00001   | Ivan | 019001  | P07965    |
+                                        | C00001   | Ivan | 019001  | P07885    |
+                                        | C00001   | Ivan | 019003  | p03453    |
+                                        | C00001   | Ivan | 019003  | p06734    |
+                                        +----------+------+---------+-----------+
 
 
 B.Find out the products and their quantities that will have to be delivered in current month.
 
-        select product_master.productno,product_master.Description ,SALES_ORDER_DETAILS.QTYOREDERD,SALES_ORDER_DETAILS.QTYDISP,sales_order.DELYDATE 
-                from  ((product_master 
-                        inner join SALES_ORDER_DETAILS on product_master.productno=SALES_ORDER_DETAILS.PRODUCTNO)
-                                inner join sales_order on SALES_ORDER.orderno=SALES_ORDER_DETAILS.orderno)
-                                        where 10=(MONTH(DELYDATE)) ; 
-
-                    +-----------+--------------+------------+---------+------------+
-                    | productno | Description  | QTYOREDERD | QTYDISP | DELYDATE   |
-                    +-----------+--------------+------------+---------+------------+
-                    | p00001    | 1.44floppies |          4 |       4 | 2020-10-02 |
-                    | p07965    | 540 HDD      |          2 |       1 | 2020-10-02 |
-                    | p07885    | CD Drive     |          2 |       1 | 2020-10-02 |
-                    +-----------+--------------+------------+---------+------------+
+                select P.productno,P.Description ,SOD.QTYOREDERD,SOD.QTYDISP,SO.ORDERDATE
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and 10=(MONTH(DELYDATE)) ; 
+                                +-----------+--------------+------------+---------+------------+
+                                | productno | Description  | QTYOREDERD | QTYDISP | DELYDATE   |
+                                +-----------+--------------+------------+---------+------------+
+                                | p00001    | 1.44floppies |          4 |       4 | 2020-10-02 |
+                                | p07965    | 540 HDD      |          2 |       1 | 2020-10-02 |
+                                | p07885    | CD Drive     |          2 |       1 | 2020-10-02 |
+                                +-----------+--------------+------------+---------+------------+
 
 
-            select product_master.productno,product_master.Description ,SALES_ORDER_DETAILS.QTYOREDERD,SALES_ORDER_DETAILS.QTYDISP,sales_order.DELYDATE 
-                    from  ((product_master 
-                             inner join SALES_ORDER_DETAILS on product_master.productno=SALES_ORDER_DETAILS.PRODUCTNO)
-                                    inner join sales_order on SALES_ORDER.orderno=SALES_ORDER_DETAILS.orderno)
-                                            where MONTH(CURDATE())=(MONTH(DELYDATE)) ;
+                select P.productno,P.Description ,SOD.QTYOREDERD,SOD.QTYDISP,SO.ORDERDATE
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and SO.ORDERDATE < "2022-10-15"; 
+
+
+                                +-----------+--------------+------------+---------+------------+
+                                | productno | Description  | QTYOREDERD | QTYDISP | ORDERDATE  |
+                                +-----------+--------------+------------+---------+------------+
+                                | p00001    | 1.44floppies |          4 |       4 | 2022-10-12 |
+                                | p07965    | 540 HDD      |          2 |       1 | 2022-10-12 |
+                                | p07885    | CD Drive     |          2 |       1 | 2022-10-12 |
+                                | p00001    | 1.44floppies |         10 |       0 | 2022-10-12 |
+                                | p03453    | monitors     |          2 |       2 | 2022-10-12 |
+                                | p06734    | mouse        |          1 |       1 | 2022-10-12 |
+                                | p00001    | 1.44floppies |         10 |       5 | 2022-10-12 |
+                                | p07975    | 1.44 Drive   |          5 |       3 | 2022-10-12 |
+                                | p07868    | keyboards    |          3 |       3 | 2022-10-12 |
+                                | p07885    | CD Drive     |          3 |       1 | 2022-10-12 |
+                                | p00001    | 1.44floppies |         10 |      10 | 2022-10-12 |
+                                | p07965    | 540 HDD      |          1 |       0 | 2022-10-12 |
+                                | p07975    | 1.44 Drive   |          1 |       0 | 2022-10-12 |
+                                +-----------+--------------+------------+---------+------------+
+          
+                select P.productno,P.Description ,SOD.QTYOREDERD,SOD.QTYDISP,SO.ORDERDATE
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and MONTH(CURDATE())=(MONTH(SO.ORDERDATE)) ; 
 
 
                 Empty set becuase no entery today in SALES_ORDER table.
 
 
-
 C. List the Productno and description of constantly sold(I.E rapidly moving) products.
 
-            select product_master.productno,product_master.Description,SALES_ORDER_DETAILS.QTYOREDERD
-                    from product_master
-                            inner join SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno
-                                    where SALES_ORDER_DETAILS.QTYOREDERD =(select max(QTYOREDERD) from SALES_ORDER_DETAILS); 
+          
 
-                            +-----------+--------------+------------+
-                            | productno | Description  | QTYOREDERD |
-                            +-----------+--------------+------------+
-                            | p00001    | 1.44floppies |         10 |
-                            | p00001    | 1.44floppies |         10 |
-                            | p00001    | 1.44floppies |         10 |
-                            +-----------+--------------+------------+
+                select  p.productno,p.description,sum(sod.qtyordered) 
+                        from product_master p,sales_order_details sod 
+                                where p.productno=sod.productno 
+                                        group by p.productno 
+                                                order by sum(sod.qtyordered) desc limit 1;
+
+                                +-----------+--------------+---------------------+
+                                | productno | description  | sum(sod.QTYOREDERD) |
+                                +-----------+--------------+---------------------+
+                                | p00001    | 1.44floppies |                  34 |
+                                +-----------+--------------+---------------------+
 
 
 
 D. Find the name of client who have purchased "Trousers";
 
 
-                select client_master.name 
-                        from (((client_master
-                                inner join sales_order on  sales_order.Clientno = client_master.Clientno )
-                                        inner join SALES_ORDER_DETAILS on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-                                                inner join product_master on product_master.productno = SALES_ORDER_DETAILS.productno)
-                                                    where product_master.description = "Trousers";
-
-
-                             Empty set
-
-
-                select client_master.name ,product_master.productno
-                        from (((product_master
-                                inner join  SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno)
-                                        inner join sales_order on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-                                                inner join client_master on  sales_order.Clientno = client_master.Clientno )
-                                                        where product_master.description = "Trousers";
-
-                             Empty set
-
-
                 select c.Name,p.productno
                         from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
                                 where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
-                                     and p.description = "Monitors"; 
+                                        and p.description = "Monitors"; 
 
-                                +------+-----------+
-                                | Name | productno |
-                                +------+-----------+
-                                | Ivan | p03453    |
-                                +------+-----------+
+                                        +------+-----------+
+                                        | Name | productno |
+                                        +------+-----------+
+                                        | Ivan | p03453    |
+                                        +------+-----------+
+
+
 
 E. List the products and orders from customers who have ordered less than 5 unit of "Pull Overs".
 
+                select p.Productno ,p.Description,c.Clientno,c.name,sod.QTYOREDERD as "keybord"
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and  sod.QTYOREDERD<5 and P.description="Keyboards";  
 
-        select product_master.Productno ,product_master.Description,client_master.Clientno,client_master.name,SALES_ORDER_DETAILS.QTYOREDERD as "Pull Over"
-            from (((product_master
-                inner join  SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno)
-                    inner join sales_order on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-                        inner join client_master on  sales_order.Clientno = client_master.Clientno )
-                            where SALES_ORDER_DETAILS.QTYOREDERD<5;
 
-                        +-----------+--------------+----------+---------+-----------+
-                        | Productno | Description  | Clientno | name    | Pull Over |
-                        +-----------+--------------+----------+---------+-----------+
-                        | p00001    | 1.44floppies | C00001   | Ivan    |         4 |
-                        | p07965    | 540 HDD      | C00001   | Ivan    |         2 |
-                        | p07885    | CD Drive     | C00001   | Ivan    |         2 |
-                        | p07868    | keyboards    | C00003   | Pramada |         3 |
-                        | p07885    | CD Drive     | C00003   | Pramada |         3 |
-                        | p03453    | monitors     | C00001   | Ivan    |         2 |
-                        | p06734    | mouse        | C00001   | Ivan    |         1 |
-                        | p07965    | 540 HDD      | C00004   | Basu    |         1 |
-                        | p07975    | 1.44 Drive   | C00004   | Basu    |         1 |
-                        +-----------+--------------+----------+---------+-----------+
+                                        +-----------+-------------+----------+---------+---------+
+                                        | Productno | Description | Clientno | name    | keybord |
+                                        +-----------+-------------+----------+---------+---------+
+                                        | p07868    | keyboards   | C00003   | Pramada |       3 |
+                                        +-----------+-------------+----------+---------+---------+
 
 
 F. Find the product and their quantities for the orders placed by "Iven" and "Ravi"
 
 
-            select product_master.Productno ,product_master.Description,client_master.Clientno,client_master.name,SALES_ORDER_DETAILS.QTYOREDERD 
-                    from (((product_master
-                            inner join  SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno)
-                                inner join sales_order on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-                                    inner join client_master on  sales_order.Clientno = client_master.Clientno )
-                                        where client_master.name = "Ivan" or client_master.name = "Mamta";
+                select P.Productno ,P.Description,C.Clientno,C.name,SOD.QTYOREDERD 
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and (C.name = "Ivan" or C.name = "Ravi");
 
-                        +-----------+--------------+----------+------+------------+
-                        | Productno | Description  | Clientno | name | QTYOREDERD |
-                        +-----------+--------------+----------+------+------------+
-                        | p00001    | 1.44floppies | C00001   | Ivan |          4 |
-                        | p07965    | 540 HDD      | C00001   | Ivan |          2 |
-                        | p07885    | CD Drive     | C00001   | Ivan |          2 |
-                        | p03453    | monitors     | C00001   | Ivan |          2 |
-                        | p06734    | mouse        | C00001   | Ivan |          1 |
-                        +-----------+--------------+----------+------+------------+
+                                +-----------+--------------+----------+------+------------+
+                                | Productno | Description  | Clientno | name | QTYOREDERD |
+                                +-----------+--------------+----------+------+------------+
+                                | p00001    | 1.44floppies | C00001   | Ivan |          4 |
+                                | p07965    | 540 HDD      | C00001   | Ivan |          2 |
+                                | p07885    | CD Drive     | C00001   | Ivan |          2 |
+                                | p03453    | monitors     | C00001   | Ivan |          2 |
+                                | p06734    | mouse        | C00001   | Ivan |          1 |
+                                | p00001    | 1.44floppies | C00005   | Ravi |         10 |
+                                | p07975    | 1.44 Drive   | C00005   | Ravi |          5 |
+                                +-----------+--------------+----------+------+------------+
+
 
 G. Find the product and their quantities for the orders placed by  clientno = "C00001" and clientno = "C00002".
 
 
-            select product_master.Productno ,product_master.Description,client_master.Clientno,client_master.name,SALES_ORDER_DETAILS.QTYOREDERD 
-                from (((product_master
-                    inner join  SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno)
-                        inner join sales_order on  SALES_ORDER_DETAILS.orderno = sales_order.orderno)
-                            inner join client_master on  sales_order.Clientno = client_master.Clientno )
-                                where client_master.clientno = "C00001" or client_master.clientno = "C00002";
+                select P.Productno ,P.Description,C.Clientno,C.name,SOD.QTYOREDERD 
+                        from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
+                                 where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
+                                        and (C.clientno = "C00001" or C.clientno = "C00002");
+  
 
+                                +-----------+--------------+----------+---------+------------+
+                                | Productno | Description  | Clientno | name    | QTYOREDERD |
+                                +-----------+--------------+----------+---------+------------+
+                                | p00001    | 1.44floppies | C00001   | Ivan    |          4 |
+                                | p07965    | 540 HDD      | C00001   | Ivan    |          2 |
+                                | p07885    | CD Drive     | C00001   | Ivan    |          2 |
+                                | p03453    | monitors     | C00001   | Ivan    |          2 |
+                                | p06734    | mouse        | C00001   | Ivan    |          1 |
+                                | p00001    | 1.44floppies | C00002   | Vandana |         10 |
+                                +-----------+--------------+----------+---------+------------+
 
-                        +-----------+--------------+----------+---------+------------+
-                        | Productno | Description  | Clientno | name    | QTYOREDERD |
-                        +-----------+--------------+----------+---------+------------+
-                        | p00001    | 1.44floppies | C00001   | Ivan    |          4 |
-                        | p07965    | 540 HDD      | C00001   | Ivan    |          2 |
-                        | p07885    | CD Drive     | C00001   | Ivan    |          2 |
-                        | p03453    | monitors     | C00001   | Ivan    |          2 |
-                        | p06734    | mouse        | C00001   | Ivan    |          1 |
-                        | p00001    | 1.44floppies | C00002   | Vandana |         10 |
-                        +-----------+--------------+----------+---------+------------+
 
 
 
@@ -313,12 +261,9 @@ G. Find the product and their quantities for the orders placed by  clientno = "C
 A. Find the productno, and description of non-moving products i.e product not bigning sold.
 
 
-                select product_master.productno , product_master.description
-                    from product_master
-                            left join SALES_ORDER_DETAILS
-                                on product_master.productno = SALES_ORDER_DETAILS.productno
-                                    where product_master.productno not in (select product_master.productno from product_master inner join SALES_ORDER_DETAILS on product_master.productno = SALES_ORDER_DETAILS.productno);
-
+                select productno,description
+    from product_master
+    where productno not in (select PRODUCTNO from SALES_ORDER_DETAILS );
 
                         +-----------+---------------+
                         | productno | description   |
@@ -330,10 +275,9 @@ A. Find the productno, and description of non-moving products i.e product not bi
 
 B. List the customers name , Address1 ,Address2 , City , PinCode for the client who placed orderno = "O19001"  :
 
-            select client_master.clientno,client_master.Name,client_master.city,client_master.pincode,client_master.state
-                    from client_master
-                            inner join SALES_ORDER on  client_master.clientno = SALES_ORDER.Clientno
-                                    where SALES_ORDER.orderno="O19001";
+            select clientno,Name,city,pincode,state
+    from client_master
+    where clientno not in (select CLIENTNO from SALES_ORDER where orderno != "O00001");
 
 
                  Empty set
