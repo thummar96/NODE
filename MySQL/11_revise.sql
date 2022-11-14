@@ -175,7 +175,7 @@
 -- 1.10 Select all the data from the products, including all the data for each product's manufacturer.
                 select * from products inner join manufacturers on products.manufacturer=manufacturers.code;
 
-                        +------+-----------------+-------+--------------+-------+------+-----------------+
+                         +------+-----------------+-------+--------------+-------+------+-----------------+
                         | code | Name            | Price | manufacturer | Cents | Code | NAME            |
                         +------+-----------------+-------+--------------+-------+------+-----------------+
                         |    5 | Monitor         |   240 |            1 | 24000 |    1 | sony            |
@@ -190,6 +190,28 @@
                         |    4 | Floppy disk     |     5 |            6 |   500 |    6 | winchester      |
                         +------+-----------------+-------+--------------+-------+------+-----------------+
 
+
+
+        (sub)   select * from products where manufacturer in (select code from manufacturers);
+
+                        +------+-----------------+-------+--------------+-------+
+                        | code | Name            | Price | manufacturer | Cents |
+                        +------+-----------------+-------+--------------+-------+
+                        |    1 | Hard Drive      | 194.4 |            5 | 24000 |
+                        |    2 | Memory          |   108 |            6 | 12000 |
+                        |    3 | Zip drive       | 121.5 |            4 | 15000 |
+                        |    4 | Floppy disk     |   4.5 |            6 |   500 |
+                        |    5 | Monitor         | 194.4 |            1 | 24000 |
+                        |    6 | DVD drive       | 145.8 |            2 | 18000 |
+                        |    7 | CD drive        |    81 |            2 |  9000 |
+                        |    8 | laser-Printer   | 218.7 |            3 | 27000 |
+                        |    9 | Toner cartridge |  59.4 |            3 |  6600 |
+                        |   10 | DVD burner      | 145.8 |            2 | 18000 |
+                        |   11 | Loudspeakers    |    63 |            2 |   700 |
+                        +------+-----------------+-------+--------------+-------+
+
+
+                       
 
 -- 1.11 Select the product name, price, and manufacturer name of all the products.
                 select products.code,products.name,manufacturers.name,products.price 
@@ -211,6 +233,24 @@
                         |    4 | Floppy disk     | winchester      |     5 |
                         +------+-----------------+-----------------+-------+
 
+        (sub)   select * from products where manufacturer in (select code from manufacturers);
+                        +------+-----------------+-------+--------------+-------+
+                        | code | Name            | Price | manufacturer | Cents |
+                        +------+-----------------+-------+--------------+-------+
+                        |    5 | Monitor         | 194.4 |            1 | 24000 |
+                        |    6 | DVD drive       | 145.8 |            2 | 18000 |
+                        |    7 | CD drive        |    81 |            2 |  9000 |
+                        |   10 | DVD burner      | 145.8 |            2 | 18000 |
+                        |   11 | Loudspeakers    |    63 |            2 |   700 |
+                        |    8 | laser-Printer   | 218.7 |            3 | 27000 |
+                        |    9 | Toner cartridge |  59.4 |            3 |  6600 |
+                        |    3 | Zip drive       | 121.5 |            4 | 15000 |
+                        |    1 | Hard Drive      | 194.4 |            5 | 24000 |
+                        |    2 | Memory          |   108 |            6 | 12000 |
+                        |    4 | Floppy disk     |   4.5 |            6 |   500 |
+                        +------+-----------------+-------+--------------+-------+
+
+
 -- 1.12 Select the average price of each manufacturer's products, showing only the manufacturer's code.
                 select avg(price),b.code 
                 from products a,manufacturers b 
@@ -228,11 +268,36 @@
                         |       62.5 |    6 |
                         +------------+------+
 
+        (sub)   select avg(price),manufacturer 
+                from products 
+                where manufacturer in (select code from manufacturers) 
+                group by manufacturer;
+     
+                        +--------------------+--------------+
+                        | avg(price)         | manufacturer |
+                        +--------------------+--------------+
+                        |              194.4 |            1 |
+                        |              108.9 |            2 |
+                        | 139.04999999999998 |            3 |
+                        |              121.5 |            4 |
+                        |              194.4 |            5 |
+                        |              56.25 |            6 |
+                        +--------------------+--------------+
+
+
 -- 1.13 Select the average price of each manufacturer's products, showing the manufacturer's name.
                 select avg(price),b.name 
                 from products a,manufacturers b 
                 where b.code=a.manufacturer
                 group by b.name;
+
+
+
+                select avg(price),manufacturer 
+                from products 
+                where manufacturer in (select code from manufacturers)
+                group by manufacturer;
+
                         +------------+-----------------+
                         | avg(price) | name            |
                         +------------+-----------------+
@@ -246,27 +311,33 @@
 
 
 -- 1.14 Select the names of manufacturer whose products have an average price larger than or equal to $150.
-                select avg(a.price),b.name 
-                from products a,manufacturers b 
-                where b.code=a.manufacturer 
-                group by b.name 
-                having avg(price)>=150;
-
                 select manufacturers.name 
                 from manufacturers 
                 inner join products 
-                on products.manufacturer=manufacturers.code 
+                on products.manufacturer=manufacturers.code
                 where Price > (SELECT AVG(Price) FROM Products) or price=150;
+                        +-----------------+
+                        | name            |
+                        +-----------------+
+                        | Fujitsu         |
+                        | sony            |
+                        | Creative Labs   |
+                        | Hewlwtt-packard |
+                        | Creative Labs   |
+                        +-----------------+
 
-                        +--------------+-----------------+
-                        | avg(a.price) | name            |
-                        +--------------+-----------------+
-                        |          240 | sony            |
-                        |          150 | Creative Labs   |
-                        |          168 | Hewlwtt-packard |
-                        |          150 | Lomega          |
-                        |          240 | Fujitsu         |
-                        +--------------+-----------------+
+        (sub)  select avg(a.price),b.name 
+                from products a,manufacturers b 
+                where b.code=a.manufacturer 
+                group by b.name
+                having avg(price)>=150;
+                        +--------------+---------+
+                        | avg(a.price) | name    |
+                        +--------------+---------+
+                        |        194.4 | sony    |
+                        |        194.4 | Fujitsu |
+                        +--------------+---------+
+
 
 -- 1.15 Select the name and price of the cheapest product.
         --  select name ,price from products  order by price limit 1;
@@ -291,16 +362,26 @@
                         | winchester | Floppy disk |     5 |
                         +------------+-------------+-------+
 
-                -- select manufacturers.name,products.name,products.price
-                -- from manufacturers
-                -- inner join products
-                -- on products.manufacturer=manufacturers.code
-                -- where price=(select min(price) from products);
+        (sub)   select code,name 
+                from manufacturers 
+                where code in (select manufacturer from  products where  price = (select min(price) from products));
+                        +------+------------+
+                        | code | name       |
+                        +------+------------+
+                        |    6 | winchester |
+                        +------+------------+
 
 -- 1.16 Select the name of each manufacturer along with the name and price of its most expensive product.
                 select name , price 
                 from products 
-                where  price = (select min(price) from products); 
+                where  price = (select max(price) from products); 
+
+                        +---------------+-------+
+                        | name          | price |
+                        +---------------+-------+
+                        | laser-Printer | 218.7 |
+                        +---------------+-------+
+
 
                 select b.name,a.name,a.price 
                 from products a,manufacturers b  
@@ -313,6 +394,15 @@
                         +-----------------+---------------+-------+
                         | Hewlett-Packard | laser-Printer | 218.7 |
                         +-----------------+---------------+-------+
+
+        (sub)   select code,name 
+                from manufacturers     
+                where code in (select manufacturer from  products where  price = (select max(price) from products));
+                        +------+-----------------+
+                        | code | name            |
+                        +------+-----------------+
+                        |    3 | Hewlwtt-packard |
+                        +------+-----------------+        
                 
 
 -- 1.17 Add a new product: Loudspeakers, $70, manufacturer 2.

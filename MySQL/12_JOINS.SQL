@@ -262,73 +262,80 @@ A. Find the productno, and description of non-moving products i.e product not bi
 
 
                 select productno,description
-    from product_master
-    where productno not in (select PRODUCTNO from SALES_ORDER_DETAILS );
+                        from product_master
+                                where productno not in (select PRODUCTNO from SALES_ORDER_DETAILS );
 
-                        +-----------+---------------+
-                        | productno | description   |
-                        +-----------+---------------+
-                        | p07865    | 1.22 floppies |
-                        | p08865    | 1.22 Drive    |
-                        +-----------+---------------+
+                                +-----------+---------------+
+                                | productno | description   |
+                                +-----------+---------------+
+                                | p07865    | 1.22 floppies |
+                                | p08865    | 1.22 Drive    |
+                                +-----------+---------------+
 
 
 B. List the customers name , Address1 ,Address2 , City , PinCode for the client who placed orderno = "O19001"  :
 
-            select clientno,Name,city,pincode,state
-    from client_master
-    where clientno not in (select CLIENTNO from SALES_ORDER where orderno != "O00001");
+                select clientno,Name,city,pincode,state
+                        from client_master
+                                where clientno not in (select CLIENTNO from SALES_ORDER where orderno = "C00001");
 
 
-                 Empty set
+                                +----------+---------+--------+---------+-------------+
+                                | clientno | Name    | city   | pincode | state       |
+                                +----------+---------+--------+---------+-------------+
+                                | C00001   | Ivan    | Bombay |  400054 | Maharashtra |
+                                | C00002   | Vandana | Madras |  780001 | Tamilnadu   |
+                                | C00003   | Pramada | Bombay |  400057 | Maharashtra |
+                                | C00004   | Basu    | Bombay |  400056 | Maharashtra |
+                                | C00005   | Ravi    | Delhi  |  100001 | Delhi       |
+                                +----------+---------+--------+---------+-------------+
+
+select clientno,Name,city,pincode,state
+       from client_master
+          where clientno not in (select CLIENTNO from SALES_ORDER where orderno = "O00001");
 
 
 c. List the client names that have placed orders before the month of May 02.
 
-            select client_master.clientno, client_master.name
-                from client_master
-                    inner join SALES_ORDER on  client_master.clientno = SALES_ORDER.Clientno
-                        where (to_days(SALES_ORDER.ORDERDATE)) < (to_days("2022-10-14"));
+                select clientno,Name
+                        from client_master
+                                 where clientno in (select Clientno from SALES_ORDER where ORDERDATE < "2022-10-14");
 
-                        +----------+---------+
-                        | clientno | name    |
-                        +----------+---------+
-                        | C00001   | Ivan    |
-                        | C00002   | Vandana |
-                        | C00001   | Ivan    |
-                        | C00005   | Ravi    |
-                        | C00003   | Pramada |
-                        | C00004   | Basu    |
-                        +----------+---------+
+                                +----------+---------+
+                                | clientno | Name    |
+                                +----------+---------+
+                                | C00001   | Ivan    |
+                                | C00002   | Vandana |
+                                | C00003   | Pramada |
+                                | C00004   | Basu    |
+                                | C00005   | Ravi    |
+                                +----------+---------+
 
 D. List if the product 'Lycra Top' has been ordered by any clientand print the client_no,Name to whom it was sold.
 
-            select c.clientno,c.Name
-                from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
-                     where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
-                            and p.description = "1.44floppies";
+                select clientno,Name
+                        from client_master
+                                where clientno in (select clientno from SALES_ORDER where orderno in (select orderno from SALES_ORDER_DETAILS where productno in  (select Productno from product_master where description = "1.44floppies")));
 
-                        +----------+---------+
-                        | clientno | Name    |
-                        +----------+---------+
-                        | C00001   | Ivan    |
-                        | C00002   | Vandana |
-                        | C00003   | Pramada |
-                        | C00005   | Ravi    |
-                        +----------+---------+
-
+                                +----------+---------+
+                                | clientno | Name    |
+                                +----------+---------+
+                                | C00001   | Ivan    |
+                                | C00002   | Vandana |
+                                | C00003   | Pramada |
+                                | C00005   | Ravi    |
+                                +----------+---------+
 
 E. List the names of client who have placed orders wroth Rs. 10000 or more.
 
-            select c.clientno,c.Name,sum(sod.PRODUCTRATE) as "Sum"
-                from  client_master c , SALES_ORDER so, SALES_ORDER_DETAILS sod,product_master p
-                    where p.productno=sod.productno and so.orderno=sod.orderno and so.Clientno = c.Clientno
-                        group by c.clientno
-                            having (sum(sod.PRODUCTRATE))>=10000;
+                select clientno,name
+                        from client_master
+                                where clientno in (select clientno from SALES_ORDER where orderno in (select orderno from SALES_ORDER_DETAILS where productno in  (select Productno from product_master where Sellprice >= 10000)));
+
 
     
-                        +----------+------+----------+
-                        | clientno | Name | Sum      |
-                        +----------+------+----------+
-                        | C00001   | Ivan | 27225.00 |  
-                        +----------+------+----------+
+                                +----------+------+
+                                | clientno | name |
+                                +----------+------+     
+                                | C00001   | Ivan |
+                                +----------+------+
