@@ -11,8 +11,18 @@
 --     remark varchar(50) ,
 --     CONSTRAINT pk_Category PRIMARY KEY(salesman_no)
 -- );
-insert into salesman_master values('S00001','Kiran','A/14 worli','Bombay',400002,'Mah',3000,100,50,'Good');
-insert into salesman_master values('S00002','Manish','65,nariman','Bombay',400001,'Mah',3000,200,100,'Good');
-insert into salesman_master values('S00003','Ravi','p-7 Bandra','Bombay',400032,'Mah',3000,200,100,'Good');
-insert into salesman_master values('S00004','Ashish','A/5 Juhu','Bombay',400044,'Mah',3500,200,150,'Good');
+-- insert into salesman_master values('S00001','Kiran','A/14 worli','Bombay',400002,'Mah',3000,100,50,'Good');
+-- insert into salesman_master values('S00002','Manish','65,nariman','Bombay',400001,'Mah',3000,200,100,'Good');
+-- insert into salesman_master values('S00003','Ravi','p-7 Bandra','Bombay',400032,'Mah',3000,200,100,'Good');
+-- insert into salesman_master values('S00004','Ashish','A/5 Juhu','Bombay',400044,'Mah',3500,200,150,'Good');
 -- select * from salesman_master;
+
+
++-------------+--------------+------------+--------+---------+-------+--------+----------+---------+--------+
+| salesman_no | salesmanname | address    | city   | pincode | state | salamt | tgttoget | ytdsale | remark |
++-------------+--------------+------------+--------+---------+-------+--------+----------+---------+--------+
+| S00001      | Kiran        | A/14 worli | Bombay |  400002 | Mah   |   3000 |      100 |      50 | Good   |
+| S00002      | Manish       | 65,nariman | Bombay |  400001 | Mah   |   3000 |      200 |     100 | Good   |
+| S00003      | Ravi         | p-7 Bandra | Bombay |  400032 | Mah   |   3000 |      200 |     100 | Good   |
+| S00004      | Ashish       | A/5 Juhu   | Bombay |  400044 | Mah   |   3500 |      200 |     150 | Good   |
++-------------+--------------+------------+--------+---------+-------+--------+----------+---------+--------+
