@@ -111,7 +111,8 @@ console.log(typeof 100n);
 
 console.log(typeof function(){});                           
                                 //function
-                                
+
 console.log(typeof Symbol('A'));                            
                                 //symbol
 
+                                
