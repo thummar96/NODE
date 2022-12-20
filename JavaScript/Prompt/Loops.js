@@ -1,0 +1,84 @@
+// The for loop:
+
+// for (let index=0; index < someArray.length; index++) {
+//   const elem = someArray[index];
+//   // ···
+// }
+// The for-in loop:
+
+// for (const key in someArray) {
+//   console.log(key);
+// }
+// The Array method .forEach():
+
+// someArray.forEach((elem, index) => {
+//   console.log(elem, index);
+// });
+// The for-of loop:
+
+// for (const elem of someArray) {
+//   console.log(elem);
+// }
+
+// Example
+/*********/
+
+// const arr = ["a", "b", "c", "d", "e"];
+
+// for (let i = 0; i < arr.length; i++) {
+//   console.log(arr[i]);
+// }                                    // a
+                                        // b
+                                        // c
+                                        // d
+                                        // e
+
+// for (let i in arr) {
+//   console.log(arr[i]);
+// }                            // a
+//                              // b
+                                // c
+                                // d
+                                // e
+
+// With the other two constructs, forEach() and for/of, you get access to the array element itself. 
+//  With forEach() you can access the array index i, with for/of you cannot.
+
+// arr.forEach(() => {});
+
+// arr.forEach((v, i, a) => console.log(`${i} - ${v} - ${a}`));    // 0 - a - a,b,c,d,e
+                                                                   // 1 - b - a,b,c,d,e
+                                                                   // 2 - c - a,b,c,d,e
+                                                                   // 3 - d - a,b,c,d,e
+                                                                   // 4 - e - a,b,c,d,e
+
+// for (let v of arr) {
+//   console.log(v);
+// }                           // a
+                               // b
+                               // c
+                               // d
+                               // e
+
+// arr.test = "bad";
+
+// console.log(arr);               // [ 'a', 'b', 'c', 'd', 'e', test: 'bad' ]
+
+
+// Prints "a, b, c, bad"
+
+// for (let i in arr) {
+//   console.log(i + " - " + arr[i]);
+// }                                       // 0 - a
+                                           // 1 - b
+                                           // 2 - c
+                                           // 3 - d
+                                           // 4 - e
+                                           // test - bad
+                                    
+
+// arr.forEach((v, i, a) => console.log(`${i} - ${v} - ${a}`));   // 0 - a - a,b,c,d,e
+                                                                  // 1 - b - a,b,c,d,e
+                                                                  // 2 - c - a,b,c,d,e
+                                                                  // 3 - d - a,b,c,d,e
+                                                                  // 4 - e - a,b,c,d,e

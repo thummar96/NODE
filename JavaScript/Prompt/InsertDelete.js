@@ -1,33 +1,40 @@
-// let arr=[11,12,13,14,15];
+let arr=[11,12,13,14,15];
 
-// console.log(arr);
-// function firstinsert()
-// {
-//     arr.unshift(16);
-//     console.log(arr);
-// }
-// function firstdelete()
-// {
-//     arr.shift();
-//     console.log(arr);
-// }
-// function lastinsert()
-// {
-//     arr.push(16);
-//     console.log(arr);
-// }
-// function lastdelete()
-// {
-//     arr.pop();
-//     console.log(arr);
-// }
-// firstinsert();
-// firstdelete();
-// lastinsert();
-// lastdelete();
+console.log(arr);
+function firstinsert()
+{
+    arr.unshift(16);
+    console.log(arr);
+}
+function firstdelete()
+{
+    arr.shift();
+    console.log(arr);
+}
+function lastinsert()
+{
+    arr.push(16);
+    console.log(arr);
+}
+function lastdelete()
+{
+    arr.pop();
+    console.log(arr);
+}
+firstinsert();
+firstdelete();
+lastinsert();
+lastdelete();
 
 
+/*    output    */
 
+/*      [ 11, 12, 13, 14, 15 ]
+        [ 16, 11, 12, 13, 14, 15 ]
+        [ 11, 12, 13, 14, 15 ]
+        [ 11, 12, 13, 14, 15, 16 ]
+        [ 11, 12, 13, 14, 15 ]
+        [ 15, 25, 35, 45, 55, 65 ]       */
 
 
 
