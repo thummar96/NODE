@@ -1,0 +1,108 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cointainer">
+        <div class="Calculator">
+            <input type="text" placeholder="0" id="outputscreen">
+            <button onclick="Clear()">Cl</button>
+            <button onclick="del()">DEL</button>
+            <button onclick="display('%')">%</button>
+            <button onclick="display('÷')">÷</button>
+            <button onclick="display('7')">7</button>
+            <button onclick="display('8')">8</button>
+            <button onclick="display('9')">9</button>
+            <button onclick="display('*')">*</button>
+            <button onclick="display('4')">4</button>
+            <button onclick="display('5')">5</button>
+            <button onclick="display('6')">6</button>
+            <button onclick="display('-')">-</button>
+            <button onclick="display('1')">1</button>
+            <button onclick="display('2')">2</button>
+            <button onclick="display('3')">3</button>
+            <button onclick="display('+')">+</button>
+            <button onclick="display('.')">.</button>
+            <button onclick="display('0')">0</button>
+            <button onclick="calculate()" class="equal">=</button>
+        </div>
+    </div>
+    <script>
+        let outputscreen = document
+        .getElementById("outputscreen")
+        function display(num){
+            outputscreen.value += num
+        }
+        function calculate(){
+        try{
+            outputscreen.value = eval
+            (outputscreen.value)
+        }
+        catch(error){
+                alert("Invalid")
+        }
+    }
+    // function clear(){
+    //     outputscreen.value = ' ';
+    // }
+    function del(){
+        outputscreen.value = outputscreen.value.slice(0,-1)
+
+    }
+    </script>
+</body>
+</html> 
+
+<!-- *********************************************************************************************************************************** -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cointainer">
+        <form>
+            <input type="text" id = "output">
+            <div class="buttons">
+                <button id ="btn - cler">AC</button>
+                <button class="('+-') ">+/-</button>
+                <button class="('%') ">%</button>
+                <button class="('÷') ">÷</button>
+                <button class="('7') ">7</button>
+                <button class="('8') ">8</button>
+                <button class="('9') ">9</button>
+                <button class="('*') ">*</button>
+                <button class="('4') ">4</button>
+                <button class="('5') ">5</button>
+                <button class="('6') ">6</button>
+                <button class="('-') ">-</button>
+                <button class="('1') ">1</button>
+                <button class="('2') ">2</button>
+                <button class="('3') ">3</button>
+                <button class="('+') ">+</button>
+                <button class="btn-0 ('0') ">0</button>
+                <button class="('.') ">.</button>
+                <button id="equal">=</button> 
+                
+            </div>
+        </form>
+    </div>
+    <script>
+        const output=document.getElementById("output")
+        const buttons=document.querySelectorAll(".btn")
+        const clear=document.getElementById("btn-clear")
+        const equal=document.getElementById("btn-equal")
+    </script>
+</body>
+</html> -->

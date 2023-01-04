@@ -1,0 +1,17 @@
+body{
+    background-image: url(../images/flowers_6.jpeg);
+}
+.div1{
+  width: 300px;
+  border: 15px solid darkslateblue;
+  padding: 50px;
+  margin: 20px;;
+  background-color: lavender;
+
+}
+.div2{
+    width: 100px;
+    height: 20px;
+    background-color: beige;
+    border: 2px solid black;    
+}

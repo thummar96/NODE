@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: whitesmoke;
+    font-family: sans-serif;
+    /* outline: lightcoral; */
+}
+.cointainer{
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Calculator{
+    background-color: aliceblue;
+    padding: 15px;
+    border-radius: 30px;
+    box-shadow: inset 5px 5px 12px black,
+                      5px 5px rgba(0, 0, 0,16);
+    display: grid;
+    grid-template-columns: repeat(4,68px);
+
+}
+input{
+    grid-column: span 4;
+    height: 70px;
+    width: 260px;
+    background-color: pink;
+    box-shadow: inset 5px 5px 12px lightpink,
+                inset 5px 5px 12px rgba(0, 0, 0, 16);
+    border: none;
+    border-radius: 30px;
+    color: rgba(70, 70 ,70);
+    font-size: 50px;
+    text-align: end;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+button{
+    height: 48px;
+    width: 48px;
+    background-color: peachpuff;
+    box-shadow: 5px 5px 12px  royalblue,
+                5px 5px 12px  rgba(0, 0, 0, 16);
+    border: none;
+    border-radius: 50%;
+    margin: 8px;
+    font-size: 16px;
+}
+.equal{
+    width: 115px;
+    border-radius: 40px;
+    background-color: lavender;
+    box-shadow: 5px 5px 12px teal,
+                    5px 5px 12px rgba(0, 0, 0, 1.6);
+}
+
+
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: gray;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cointainer{
+    width: 350px;
+    height: auto;
+    background-color: aliceblue;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 5px 10px 30px rgba(60, 60, 60);
+}
+form input{
+    width: 300px;
+    height: 15%;
+    background-color: beige;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: red;
+    outline: none;
+    pointer-events: none;
+    text-align: right;
+    border: none;
+    padding-right: 20px;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+/* button{
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+    border: 1px solid rgba(0, 0, 0 , .1);
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: 10px;
+    transition: all ease-in-out .2s;
+    background-color: blue;
+} */
+/* button{
+    width: 70px;
+    height: 70px;
+    
+} */
+/* .btn :active{
+    background-color: brown;
+    font-size: 24px;
+} */
+
+/* #btn-clear{
+    color: red;
+} */
+
+/* #btn-equal{
+    width: 100px;
+    height: 50px;
+    background-color: green;
+    color: gold;
+} */
+
+/* .btn-0{
+    grid-column: 1/3;
+} */ 
