@@ -5,6 +5,7 @@ const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
 
 const url = 'mongodb+srv://admin:admin@cluster0.vivlma3.mongodb.net/?retryWrites=true&w=majority';
+// const url = 'mongodb://localhost:7080';
 
 // getData.get("/",(req,res)=>{
 
