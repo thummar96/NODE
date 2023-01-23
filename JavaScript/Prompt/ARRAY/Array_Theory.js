@@ -27,7 +27,8 @@
 
 //     --> A JavaScript array's length property and numerical properties are connected.
 
-//     --> Several of the built-in array methods (e.g., join(), slice(), indexOf(), etc.) take into account the value of an array's length property when they're called.
+//     --> Several of the built-in array methods (e.g., join(), slice(), indexOf(), etc.) take into account the value of an array's 
+//   length property when they're called.
 
 //     --> Other methods (e.g., push(), splice(), etc.) also result in updates to an array's length property.
 
