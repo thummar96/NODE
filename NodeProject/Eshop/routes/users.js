@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const Users = require('../Models/usersModel');
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
  
 router.use(express.json());
 router.use(express.urlencoded());
