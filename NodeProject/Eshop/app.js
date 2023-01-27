@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require("cors");
 const app = express();
-// const authjwt = require("./helpers/jwt");
+const authjwt = require("./helpers/jwt");
 require("dotenv/config");
 const PORT = process.env.PORT
 
@@ -21,7 +21,7 @@ app.use(morgan('tiny'))
 app.use(express.json());
 app.use(express.urlencoded());
 
-// app.use(authjwt);
+app.use(authjwt);
 
 // app.use(
 //     jwt({
