@@ -18,3 +18,11 @@ create table Users(id int NOT NULL AUTO_INCREMENT,
          CONSTRAINT PK_Users PRIMARY KEY(id) 
      );
 
+--//category
+
+create table  Category(id int primary key AUTO_INCREMENT,
+    name varchar(30),
+    color varchar(30),
+    icon varchar(30),
+    image varchar(30)
+);
