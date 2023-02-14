@@ -26,28 +26,31 @@ app.get('/', (req, res) => {
 });
 
 // database connect
-const connection = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "admin@123",
-    database: "skilldemo",
+// const connection = mysql.createConnection({
+//     host: "127.0.0.1",
+//     user: "root",
+//     password: "admin@123",
+//     database: "kinjal",
 
-    host : "127.0.0.1",
-    user: "root",
-    password : "admin@123",
-    database : "skilldemo",
-    port : 3306,
-});
-
-connection.connect(function(error){
-    if(error){
-        console.log(error);
-    }
-    else{
-        console.log("Database connected Successfully...!!!");
-
+// database connect
+const connection = require("./Middleware/dbConnection");
+connection.connect((error) => {
+    if (error) {
+        console.log(error)
+    } else {
+        console.log("databases connected successfully");
     }
 });
+
+// connection.connect(function (error){
+//     if(error){
+//         console.log(error);
+//     }
+//     else{
+//         console.log("Database connected Successfully...!!!");
+
+//     }
+// });
 
 
 

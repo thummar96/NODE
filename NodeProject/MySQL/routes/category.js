@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('mysql');
 router.use(express.json());
 router.use(express.urlencoded());
+
+
 
 // getdata
 router.get("/", (req, res) => {

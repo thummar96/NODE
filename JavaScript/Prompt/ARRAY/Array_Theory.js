@@ -226,7 +226,7 @@
 
 // let arr_new = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 // console.log(arr_new.splice(3));
-                                                    /*          [
+                                                     /*          [
                                                                     13, 14, 15, 16,
                                                                     17, 18, 19, 20
                                                                 ]                           */
@@ -247,7 +247,7 @@
 
 // arr_new.slice(2);
 // console.log(arr_new.slice(3));
-                                                    /*          [
+                                                     /*          [
                                                                     13, 14, 15, 16,
                                                                     17, 18, 19, 20
                                                                 ]                         */
@@ -363,9 +363,3 @@
 //     })
 // );
 
-console.log(
-    [1, 2, 3, 4, 5].reduce((firstElement, nextElement) => {
-        console.log(firstElement +" - " + nextElement)
-        return firstElement + nextElement;
-    },10)
-);
