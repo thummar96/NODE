@@ -1,14 +1,14 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
   
   async function start(){
             const response = await openai.createCompletion({
                 model: "text-davinci-003",
-                prompt: "c programm in hello word!!",
+                prompt: "c programm even number 1 to 10",
                 temperature: 0,
                 max_tokens: 1000,
             });
